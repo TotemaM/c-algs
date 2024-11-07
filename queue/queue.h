@@ -10,46 +10,85 @@
 #define QUEUE_H
 
 #include <stdlib.h>
-#include <stdbool.h>
-
-typedef struct Queue Queue;
 
 /*
- * Dynamic queue constructor :
- * @param element_size Ammount of bytes needed to store one element
- * @param capacity Number of elements that you entend to store in the queue.
- * Although the queue has a dynamic growing system.
- * @return A pointer to the dynamically allocated queue.
+ * Dynamic queue structure.
+ *
+ * data           : Pointer to the data array.
+ * element_size   : Size in bytes of stored elements.
+ * size           : Number of elements in the queue.
+ * capacity       : Number of elements that the queue can store.
+ * initialized    : Boolean to check if the queue was initialized.
+ * 
+ * It is absolutely not recommended to access these attributes directly,
+ * use the functions provided instead.
  */
-Queue* queue(size_t element_size, int capacity);
+typedef struct Queue {
+    void* data;
+    size_t element_size;
+    unsigned int size;
+    unsigned int capacity;
+    short unsigned int initialized;
+} Queue ;
+
+// Queue error codes
+typedef enum {
+    NO_ERR,
+    NO_INIT,    // The queue is not initialized.
+    IS_INIT,    // The queue was already initialized.
+    EMPTY,      // The queue is empty.
+    SYS_ERR     // System error, see errno for potential info.
+} QueueError ;
+
+/*
+ * Dynamic queue constructor
+ *
+ * q            : Pointer to a uninitialized Queue structure.
+ * element_size : Ammount of bytes needed to store one element.
+ * capacity     : Number of values the queue can store at initialization.
+ * Altought the data has a dynamically growing system.
+ * 
+ * Returns a QueueError
+ */
+QueueError queue(Queue* q, size_t element_size, unsigned int capacity);
 
 /*
  * Add an element to a queue.
- * @param q The queue to add the element to.
- * @param element The element to add to the queue.
- * @return void
+ *
+ * q            : Pointer to a queue.
+ * element      : Element to add to the queue.
+ * 
+ * Returns a QueueError
  */
-void  enqueue(Queue* q, void* element);
+QueueError enqueue(Queue* q, const void* element);
 
 /*
  * Remove an element from a queue.
- * @param q The queue to remove the element from.
- * @param element Buffer to store the removed element.
- * @return true if the element was removed, false if the queue is empty.
+ *
+ * q            : Pointer to queue.
+ * element      : Buffer to store the removed element.
+ * 
+ * Returns a QueueError
  */
-bool dequeue(Queue* q, void* element);
+QueueError dequeue(Queue* q, void* element);
 
 /*
  * Free the memory allocated for a queue.
- * @param q The queue to free. 
+ *
+ * q            : The queue to free.
+ * 
+ * Returns a QueueError
  */
-void queue_free(Queue* q);
+QueueError queue_free(Queue* q);
 
 /*
  * Queue getter for the size attribute
- * @param q The queue to get the size from.
- * @return The ammount of elements in the queue.
+ *
+ * q            : The queue to get the size from.
+ * buffer       : Buffer that will contain the size of the queue.
+ * 
+ * Returns a QueueError
  */
-int queue_getSize(Queue* q);
+QueueError queue_getSize(Queue* q, unsigned int* size);
 
 #endif // QUEUE_H
