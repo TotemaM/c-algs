@@ -33,7 +33,7 @@ typedef struct Queue {
 
 // Queue error codes
 typedef enum {
-    NO_ERR,
+    NO_ERR,     // Equals to "return 0".
     NO_INIT,    // The queue is not initialized.
     IS_INIT,    // The queue was already initialized.
     EMPTY,      // The queue is empty.
@@ -45,7 +45,7 @@ typedef enum {
  *
  * q            : Pointer to a uninitialized Queue structure.
  * element_size : Ammount of bytes needed to store one element.
- * capacity     : Number of values the queue can store at initialization.
+ * capacity     : Number of elements the queue can store at initialization.
  * Altought the data has a dynamically growing system.
  * 
  * Returns a QueueError
@@ -73,9 +73,9 @@ QueueError enqueue(Queue* q, const void* element);
 QueueError dequeue(Queue* q, void* element);
 
 /*
- * Free the memory allocated for a queue.
+ * Free the memory allocated for the data stored in a queue.
  *
- * q            : The queue to free.
+ * q            : Pointer to a queue
  * 
  * Returns a QueueError
  */
@@ -85,7 +85,7 @@ QueueError queue_free(Queue* q);
  * Queue getter for the size attribute
  *
  * q            : The queue to get the size from.
- * buffer       : Buffer that will contain the size of the queue.
+ * size         : Buffer that will contain the size of the queue.
  * 
  * Returns a QueueError
  */
