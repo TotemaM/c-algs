@@ -24,9 +24,10 @@ StackError stack(Stack* s, size_t element_size, unsigned int capacity) {
 StackError stack_push(Stack* s, const void* element) {
     if (s->initialized == 0) { return NO_INIT; }
     if (s->size >= s->capacity) {
-        s->capacity *= 2;
-        s->data = realloc(s->data, s->capacity * s->element_size);
+        unsigned int temp_capacity = s->capacity * 2;
+        s->data = realloc(s->data, s->element_size * temp_capacity);
         if (s->data == NULL) { return SYS_ERR; }
+        s->capacity = temp_capacity;
     }
     memcpy((char*)s->data + s->size * s->element_size, element, s->element_size);
     s->size++;

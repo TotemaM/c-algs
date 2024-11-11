@@ -24,10 +24,11 @@ QueueError queue(Queue* q, size_t element_size, unsigned int capacity) {
 QueueError enqueue(Queue* q, const void* element) {
     if (q->initialized == 0) { return NO_INIT; }
     if (q->size >= q->capacity) {
-        q->capacity *= 2;
-        void* temp = realloc(q->data, q->capacity * q->element_size);
+        unsigned int temp_capacity = q->capacity * 2;
+        void* temp = realloc(q->data, q->element_size * temp_capacity);
         if (temp == NULL) { return SYS_ERR; }
         q->data = temp;
+        q->capacity = temp_capacity;
     }
     memcpy((char*)q->data + q->size * q->element_size, element, q->element_size);
     q->size++;
