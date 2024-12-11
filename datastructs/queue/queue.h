@@ -18,27 +18,18 @@
  * element_size   : Size in bytes of stored elements.
  * size           : Number of elements in the queue.
  * capacity       : Number of elements that the queue can store.
- * initialized    : Boolean to check if the queue was initialized.
  * 
  * It is absolutely not recommended to access these attributes directly,
  * use the functions provided instead.
+ * 
+ * !!! Do not forget to use queue_free(...) after use, to avoid memory leaks.
  */
 typedef struct Queue {
     void* data;
     size_t element_size;
     unsigned int size;
     unsigned int capacity;
-    short unsigned int initialized;
 } Queue ;
-
-// Queue error codes
-typedef enum {
-    NO_ERR,     // Equals to "return 0".
-    NO_INIT,    // The queue is not initialized.
-    IS_INIT,    // The queue was already initialized.
-    EMPTY,      // The queue is empty.
-    SYS_ERR     // System error, see errno for potential info.
-} QueueError ;
 
 /*
  * Dynamic queue constructor
@@ -48,9 +39,9 @@ typedef enum {
  * capacity     : Number of elements the queue can store at initialization.
  * Altought the data has a dynamically growing system.
  * 
- * Returns a QueueError
+ * Returns 1 on system memory error, 0 otherwise.
  */
-QueueError queue(Queue* q, size_t element_size, unsigned int capacity);
+short unsigned int queue(Queue* q, size_t element_size, unsigned int capacity);
 
 /*
  * Add an element to a queue.
@@ -58,9 +49,9 @@ QueueError queue(Queue* q, size_t element_size, unsigned int capacity);
  * q            : Pointer to a queue.
  * element      : Element to add to the queue.
  * 
- * Returns a QueueError
+ * Returns 1 on system memory error, 0 otherwise.
  */
-QueueError enqueue(Queue* q, const void* element);
+short unsigned int enqueue(Queue* q, const void* element);
 
 /*
  * Remove an element from a queue.
@@ -68,18 +59,18 @@ QueueError enqueue(Queue* q, const void* element);
  * q            : Pointer to queue.
  * element      : Buffer to store the removed element.
  * 
- * Returns a QueueError
+ * Returns 1 if nothing to dequeu, 0 otherwise.
  */
-QueueError dequeue(Queue* q, void* element);
+short unsigned int dequeue(Queue* q, void* element);
 
 /*
  * Free the memory allocated for the data stored in a queue.
  *
  * q            : Pointer to a queue
  * 
- * Returns a QueueError
+ * void
  */
-QueueError queue_free(Queue* q);
+void queue_free(Queue* q);
 
 /*
  * Queue getter for the size attribute
@@ -87,8 +78,27 @@ QueueError queue_free(Queue* q);
  * q            : The queue to get the size from.
  * size         : Buffer that will contain the size of the queue.
  * 
- * Returns a QueueError
+ * Returns the queue size.
  */
-QueueError queue_getSize(Queue* q, unsigned int* size);
+unsigned int queue_size(Queue* q);
+
+/*
+ * Queue getter for the size attribute
+ *
+ * q            : The queue to get the size from.
+ * size         : Buffer that will contain the size of the queue.
+ * 
+ * Returns the queue capacity.
+ */
+unsigned int queue_capacity(Queue* q);
+
+/*
+ * Queue method printing the values of his attributes.
+ *
+ * q            : Pointer to a queue
+ * 
+ * Returns void
+ */
+void queue_state(Queue* q);
 
 #endif // QUEUE_H

@@ -10,6 +10,7 @@
 #define STACK_H
 
 #include <stdlib.h>
+#include <stdbool.h>
 
 /*
  * Dynamic stack structure.
@@ -18,27 +19,18 @@
  * element_size   : Size in bytes of stored elements.
  * size           : Number of elements in the stack.
  * capacity       : Number of elements that the stack can store.
- * initialized    : Boolean to check if the stack was initialized.
  * 
  * It is absolutely not recommended to access these attributes directly,
  * use the functions provided instead.
+ * 
+ * !!! Do not forget to use stack_free(...) after use, to avoid memory leaks.
  */
 typedef struct Stack {
     void* data;
     size_t element_size;
     unsigned int size;
     unsigned int capacity;
-    short unsigned int initialized;
 } Stack ;
-
-// Stack error codes
-typedef enum {
-    NO_ERR,     // Equals to "return 0".
-    NO_INIT,    // The queue is not initialized.
-    IS_INIT,    // The queue was already initialized.
-    EMPTY,      // The queue is empty.
-    SYS_ERR     // System error, see errno for potential info.
-} StackError ;
 
 /*
  * Dyanmic stack constructor
@@ -48,47 +40,64 @@ typedef enum {
  * capacity     : Number of elements the stack can store at initialization.
  * Altought the data has a dynamically growing system.
  * 
- * Returns a StackError
+ * Returns 1 on system memory error, 0 otherwise.
  */
-StackError stack(Stack* s, size_t element_size, unsigned int capacity);
+short unsigned int stack(Stack* s, size_t element_size, unsigned int capacity);
 
 /*
  * Add an element to a stack.
  *
- * q            : Pointer to a stack.
+ * s            : Pointer to a stack.
  * element      : Element to add to the stack.
  * 
- * Return a StackError
+ * Returns 1 on system memory error, 0 otherwise.
  */
-StackError stack_push(Stack* s, const void* element);
+short unsigned int stack_push(Stack* s, const void* element);
 
 /*
  * Remove an element from a stack.
  *
- * q            : Pointer to a stack.
+ * s            : Pointer to a stack.
  * element      : Buffer to store the removed value.
  * 
- * Returns a StackError.
+ * Returns 1 if nothing to pop, 0 otherwise.
  */
-StackError stack_pop(Stack* s, void* element);
+short unsigned int stack_pop(Stack* s, void* element);
 
 /*
  * Free the memory allocated for the data stored in a stack.
  *
- * q            : Pointer to a stack
+ * s            : Pointer to a stack
  * 
- * Returns a StackError.
+ * Returns void
  */
-StackError stack_free(Stack* s);
+void stack_free(Stack* s);
 
 /*
  * Stack getter for the "size" attribute.
  *
- * q            : Pointer to a stack
- * size         : Buffer that will contain the size of the queue.
+ * s            : Pointer to a stack
  * 
- * Returns a StackError.
+ * Returns stack used size.
  */
-StackError stack_getSize(Stack* s, unsigned int* size);
+unsigned int stack_size(const Stack* s);
+
+/*
+ * Stack getter for the "capacity" attribute.
+ *
+ * s            : Pointer to a stack
+ * 
+ * Returns stack capacity.
+ */
+unsigned int stack_capacity(const Stack* s);
+
+/*
+ * Stack method printing the values of his attributes.
+ *
+ * s            : Pointer to a stack
+ * 
+ * Returns void
+ */
+void stack_state(Stack* s);
 
 #endif // STACK_H
