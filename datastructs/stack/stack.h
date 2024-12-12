@@ -35,7 +35,7 @@ typedef struct Stack {
 /*
  * Dyanmic stack constructor
  *
- * s            : Pointer to a uniitialized Stack structure.
+ * s            : Pointer to a unitialized Stack structure.
  * element_size : Ammount of bytes needed to store one element.
  * capacity     : Number of elements the stack can store at initialization.
  * Altought the data has a dynamically growing system.
