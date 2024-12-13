@@ -54,31 +54,31 @@ short unsigned int str_cmp(const Str* s, const Str* t);
  * 
  * Returns 1 if equal, 0 otherwise.
  */
-short unsigned int str_cmp_char(const Str* s, const char* arr);
+short unsigned int str_cmp_char(const Str* s, const char arr[]);
 
-/* TODO
+/*
  * Checks if the first string contains the content of the second string.
  *
  * s            : Pointer to a String structure.
  * t            : Pointer to a String structure.
- * 
- * Returns 1 if containing, 0 otherwise.
+ *
+ * Returns the index where subsequence is starting in first string. If not contained -1.
  */
-short unsigned int str_cntn(const Str* s, const Str* t);
+short int str_cntn(const Str* s, const Str* t);
 
-/* TODO
+/*
  * Checks if a string contains the content of a char array.
  *
  * s            : Pointer to a String structure.
  * arr          : Pointer to a null terminated char array.
- * 
- * Returns 1 if containing, 0 otherwise.
+ *
+ * Returns the index where subsequence is starting in first string. If not contained -1.
  */
-short unsigned int str_cntn_char(const Str* s, const char* arr);
+// TODO short int str_cntn_char(const Str* s, const char arr[]);
 
-// TODO Concatenate
-//void str_cnc(Str* s, Str* t);
-//void str_cnc_char(Str* s, const char* arr);
+// TODO void str_cnc(Str* s, Str* t);
+
+// TODO void str_cnc_char(Str* s, const char* arr);
 
 /*
  * Getter for the "length" attribute of a string

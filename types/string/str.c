@@ -1,3 +1,11 @@
+////////////////////////////////////
+// This file is under MIT License //
+// https://mit-license.org/       //
+//                                //
+// Copyright (c) 2024 Totema      //
+// https://github.com/TotemaM     //
+////////////////////////////////////
+
 #include "str.h"
 
 #include <stdlib.h>
@@ -10,7 +18,7 @@ short unsigned int str(Str* s, const char arr[]) {
     for (unsigned int i = 0; i < s->length; i++) {
         s->data[i] = arr[i];
     }
-    s->data[s->length++] = '\0';
+    s->data[s->length+1] = '\0';
     return 0;
 }
 
@@ -30,9 +38,17 @@ short unsigned int str_cmp_char(const Str* s, const char arr[]) {
     return 1;
 }
 
-//short unsigned int str_cntn(const Str* s, const Str* t) {}
+short int str_cntn(const Str* s, const Str* t) {
+    for (unsigned int i = 0; i < s->length; i++) {
+        if (s->data[i] != t->data[0]) { continue; }
+        unsigned int j = 1;
+        while (j < t->length-1 && s->data[i+j] == t->data[j]) { j++; }
+        if (j == t->length-1 && s->data[i+j] == t->data[j]) { return i; }
+    }
+    return -1;
+}
 
-//short unsigned int str_cntn_char(const Str* s, const char arr[]) {}
+//short int str_cntn_char(const Str* s, const char arr[]) {}
 
 //void str_cnc(Str* s, Str* t) {}
 
