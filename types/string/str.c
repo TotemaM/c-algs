@@ -39,9 +39,9 @@ short unsigned int str_cmp_char(const Str* s, const char arr[]) {
 }
 
 short int str_cntn(const Str* s, const Str* t) {
+    if (t->length > s->length) { return -1; }
     for (unsigned int i = 0; i < s->length; i++) {
-        if (s->data[i] != t->data[0]) { continue; }
-        unsigned int j = 1;
+        unsigned int j = 0;
         while (j < t->length-1 && s->data[i+j] == t->data[j]) { j++; }
         if (j == t->length-1 && s->data[i+j] == t->data[j]) { return i; }
     }
