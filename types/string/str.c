@@ -48,7 +48,17 @@ short int str_cntn(const Str* s, const Str* t) {
     return -1;
 }
 
-//short int str_cntn_char(const Str* s, const char arr[]) {}
+short int str_cntn_char(const Str* s, const char arr[]) {
+    unsigned int a_len = 0;
+    for (;arr[a_len] != '\0'; a_len++);
+    if (a_len > s->length) { return -1; }
+    for (unsigned int i = 0; i < s->length; i++) {
+        unsigned int j = 0;
+        while (j < a_len-1 && s->data[i+j] == arr[j]) { j++; }
+        if (j == a_len-1 && s->data[i+j] == arr[j]) { return i; }
+    }
+    return -1;
+}
 
 short unsigned int str_cnct(Str* s, Str* t) {
     unsigned int temp = s->length + t->length;

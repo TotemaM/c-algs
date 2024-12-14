@@ -74,7 +74,7 @@ short int str_cntn(const Str* s, const Str* t);
  *
  * Returns the index where subsequence is starting in first string. If not contained -1.
  */
-// TODO short int str_cntn_char(const Str* s, const char arr[]);
+short int str_cntn_char(const Str* s, const char arr[]);
 
 /*
  * Concatenating the content of the second string to the first string.
