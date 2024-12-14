@@ -123,4 +123,15 @@ void str_print(Str* s);
  */
 void str_free(Str* s);
 
+/*
+ * Frees the memory allocated for multiple strings.
+ *
+ * s            : Pointer to a string
+ * ...          : Other pointers to string
+ * NULL         : ! Mandatory ! Last parameter has to be NULL pointer.
+ * 
+ * Returns void
+ */
+void str_frees(Str* s, ...);
+
 #endif // STR_H

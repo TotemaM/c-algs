@@ -10,6 +10,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdarg.h>
 
 short unsigned int str(Str* s, const char arr[]) {
     for (s->length = 0; arr[s->length] != '\0'; s->length++ );
@@ -98,4 +99,17 @@ void str_print(Str* s) {
 void str_free(Str* s) {
     free(s->data);
     s->length = 0;
+}
+
+void str_frees(Str* s, ...) {
+    va_list args;
+    va_start(args, s);
+
+    Str* current = s;
+    while (current != NULL) {
+        free(current->data);
+        current->length = 0;
+        current = va_arg(args, Str *);
+    }
+    va_end(args);
 }
