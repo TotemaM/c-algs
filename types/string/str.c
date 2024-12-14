@@ -50,9 +50,31 @@ short int str_cntn(const Str* s, const Str* t) {
 
 //short int str_cntn_char(const Str* s, const char arr[]) {}
 
-//void str_cnc(Str* s, Str* t) {}
+short unsigned int str_cnct(Str* s, Str* t) {
+    unsigned int temp = s->length + t->length;
+    s->data = realloc(s->data, sizeof(char) * (temp) + 1);
+    if (s->data == NULL) { return 1; }
+    for (unsigned int i = s->length; i < temp; i++) {
+        s->data[i] = t->data[i-s->length];
+    }
+    s->data[temp] = '\0';
+    s->length = temp;
+    return 0;
+}
 
-//void str_cnc_char(Str* s, const char* arr) {}
+short unsigned int str_cnct_char(Str* s, const char arr[]) {
+    unsigned int a_len = 0;
+    for (;arr[a_len] != '\0'; a_len++);
+    unsigned int temp = s->length + a_len;
+    s->data = realloc(s->data, sizeof(char) * (temp) + 1);
+    if (s->data == NULL) { return 1; }
+    for (unsigned int i = s->length; i < temp; i++) {
+        s->data[i] = arr[i-s->length];
+    }
+    s->data[temp] = '\0';
+    s->length = temp;
+    return 0;
+}
 
 unsigned int str_length(Str* s) { return s->length; }
 

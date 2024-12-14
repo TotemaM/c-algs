@@ -76,9 +76,25 @@ short int str_cntn(const Str* s, const Str* t);
  */
 // TODO short int str_cntn_char(const Str* s, const char arr[]);
 
-// TODO void str_cnc(Str* s, Str* t);
+/*
+ * Concatenating the content of the second string to the first string.
+ *
+ * s            : Pointer to a String structure.
+ * t            : Pointer to a String structure.
+ *
+ * Returns 1 on system memory error, 0 otherwise.
+ */
+short unsigned int str_cnct(Str* s, Str* t);
 
-// TODO void str_cnc_char(Str* s, const char* arr);
+/*
+ * Concatenating the content of a char array to a string
+ *
+ * s            : Pointer to a String structure.
+ * arr          : Pointer to a null terminated char array.
+ *
+ * Returns 1 on system memory error, 0 otherwise.
+ */
+short unsigned int str_cnct_char(Str* s, const char arr[]);
 
 /*
  * Getter for the "length" attribute of a string
