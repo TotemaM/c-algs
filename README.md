@@ -1,8 +1,9 @@
 # C Algorithms
-Vanilla C implementations of wellknown algorithms and data structures.
+Vanilla C implementations of well-known algorithms and data structures.
 
-| Data Structures                        |
-| :------------------------------------: |
-| [Array](data-structures/array/array.h) |
-| [Stack](data-structures/stack/stack.h) |
-| [Queue](data-structures/queue/queue.h) |
+## Table of contents
+| Data Structures                        | Mathematics                           | Types                                 |
+| :------------------------------------: | :-----------------------------------: | :-----------------------------------: |
+| [Array](data-structures/array/array.h) | [Complex](math/complex/complex.h)     | [Char](types/char/char.h)             |
+| [Stack](data-structures/stack/stack.h) |                                       | [String](types/string/string.h)       |
+| [Queue](data-structures/queue/queue.h) |                                       |                                       |
