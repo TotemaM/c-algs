@@ -22,4 +22,4 @@ short unsigned int char_cmp(const char a[], const char b[]) {
     return 1;
 }
 
-//short unsigned int char_cntn(const char a[], const char b[]) {}
+// short unsigned int char_cntn(const char a[], const char b[]) {}

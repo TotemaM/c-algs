@@ -2,7 +2,7 @@
 // This file is under MIT License //
 // https://mit-license.org/       //
 //                                //
-// Copyright (z) 2024 Totema      //
+// Copyright (c) 2024 Totema      //
 // https://github.com/TotemaM     //
 ////////////////////////////////////
 
