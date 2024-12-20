@@ -14,15 +14,32 @@
 typedef struct TFile {
     char* path;
     FILE* ptr;
-    char* content;
-    unsigned int size;
+    unsigned int length;
     unsigned int lines;
 } TFile ;
 
+/* Text File constructor */
 short unsigned int tfile(TFile* f, char path[]);
 
-void tfile_free(TFile* f);
+/* Getter for "lines" attribute. */
+unsigned int tfile_lines(const TFile* f);
 
-void tfile_print(TFile* f);
+/* Getter for "length" attribute. */
+unsigned int tfile_length(const TFile* f);
+
+/* Get the content of the file inside a char array */
+short unsigned int tfile_get(TFile* f, char content[]);
+
+/* Print the content of a file in the terminal */
+short unsigned int tfile_print(TFile* f);
+
+/* Overwrite the content of the file. */
+short unsigned int tfile_overwrite(TFile* f, const char content[]);
+
+/* Writing content at the end of the file. */
+short unsigned int tfile_add(TFile* f, const char content[]);
+
+/* Writing a new line with content at the end of the file. */
+short unsigned int tfile_append(TFile* f, const char content[]);
 
 #endif // TFILE_H

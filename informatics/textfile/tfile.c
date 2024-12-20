@@ -11,25 +11,72 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-
 short unsigned int tfile(TFile* f, char path[]) {
+    if (access(path, F_OK) != 0) { return 1; }
+    f->path = path;
+    f->length = 0;
+    f->lines = 0;
     f->ptr = fopen(path, "r");
     if (f->ptr == NULL) { return 1; }
-    f->path = path;
-    fseek(f->ptr, 0, SEEK_END);
-    f->size = ftell(f->ptr);
-    f->content = (char*)malloc(f->size + 1);
-    fseek(f->ptr, 0, SEEK_SET);
-    fread(f->content, f->size, 1, f->ptr);
-    f->content[f->size] = '\0';
+    for (char c; (c = fgetc(f->ptr)) != EOF; f->length++) {
+        if (c == '\n') { f->lines++; }
+    }
+    fclose(f->ptr);
     return 0;
 }
 
-void tfile_print(TFile* f) {
-    printf("%s\n", f->content);
+unsigned int tfile_lines(const TFile* f) { return f->lines; }
+
+unsigned int tfile_length(const TFile* f) { return f->length; }
+
+short unsigned int tfile_get(TFile* f, char content[]) {
+    f->ptr = fopen(f->path, "r");
+    if (f->ptr == NULL) { return 1; }
+    fgets(content, f->length, f->ptr);
+    fclose(f->ptr);
+    return 0;
 }
 
-void tfile_free(TFile* f) {
+short unsigned int tfile_print(TFile* f) {
+    f->ptr = fopen(f->path, "r");
+    if (f->ptr == NULL) { return 1; }
+    char c;
+    while ((c = fgetc(f->ptr)) != EOF) {
+        printf("%c", c);
+    }
     fclose(f->ptr);
-    free(f->content);
+    printf("\n");
+    return 0;
+}
+
+short unsigned int tfile_overwrite(TFile* f, const char content[]) {
+    f->ptr = fopen(f->path, "w");
+    if (f->ptr == NULL) { return 1; }
+    fprintf(f->ptr, "%s", content);
+    fclose(f->ptr);
+    return 0;
+}
+
+short unsigned int tfile_add(TFile* f, const char content[]) {
+    f->ptr = fopen(f->path, "a");
+    if (f->ptr == NULL) { return 1; }
+    unsigned int i = 0;
+    for (; content[i] != '\0'; i++) {
+        if (content[i] == '\n') { f->lines++; }
+    }
+    f->length += i;
+    fprintf(f->ptr, "%s", content);
+    fclose(f->ptr);
+    return 0;
+}
+
+short unsigned int tfile_append(TFile* f, const char content[]) {
+    f->ptr = fopen(f->path, "a");
+    if (f->ptr == NULL) { return 1; }
+    fprintf(f->ptr, "\n");
+    f->lines++;
+    f->length++;
+    fclose(f->ptr);
+    if (tfile_add(f, content) == 1) { return 1; }
+    return 0;
 }
