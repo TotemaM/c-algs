@@ -11,8 +11,11 @@
 
 #include <stdlib.h>
 
-// Generates an array with random unsigned int 0 represents
-void generate(unsigned int* buffer, const unsigned int size) {
+/*
+ * Fills a given array of given size, with unsigned int, ranged 
+ * between [0, size[.
+ */
+void rand_arr(unsigned int* buffer, const unsigned int size) {
     for (unsigned int i = 0; i < size; i++) {
         buffer[i] = rand() % size;
     }
