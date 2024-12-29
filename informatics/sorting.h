@@ -9,15 +9,7 @@
 #ifndef SORTING_H
 #define SORTING_H
 
-#include <stdlib.h>
 #include <stdio.h>
-
-// Generates an array with random unsigned int 0 represents
-void generate(unsigned int* buffer, const unsigned int size) {
-    for (unsigned int i = 0; i < size; i++) {
-        buffer[i] = rand() % size;
-    }
-}
 
 // Applies a selection sort to a given array of given size.
 void selection_sort(unsigned int* arr, const unsigned int size) {
