@@ -31,6 +31,16 @@ short unsigned int str_cmp(const Str* s, const Str* t) {
     return 1;
 }
 
+short unsigned int char_cmp(const char a[], const char b[]) {
+    unsigned int i = 0;
+    while (a[i] != '\0' && b[i] != '\0') {
+        if (a[i] != b[i]) { return 0; }
+        i++;
+    }
+    if (a[i] != b[i]) { return 0; }
+    return 1;
+}
+
 short unsigned int str_cmp_char(const Str* s, const char arr[]) {
     for (unsigned int i = 0; arr[i] != '\0'; i++) {
         if (i >= s->length) { return 0; }
@@ -61,6 +71,8 @@ short int str_cntn_char(const Str* s, const char arr[]) {
     return -1;
 }
 
+// short unsigned int char_cntn(const char a[], const char b[]) {}
+
 short unsigned int str_cnct(Str* s, Str* t) {
     unsigned int temp = s->length + t->length;
     s->data = realloc(s->data, sizeof(char) * (temp) + 1);
@@ -88,6 +100,12 @@ short unsigned int str_cnct_char(Str* s, const char arr[]) {
 }
 
 unsigned int str_length(Str* s) { return s->length; }
+
+short unsigned int char_length(const char arr[]) {
+    unsigned int i = 0;
+    while (arr[i] != '\0') { i++; }
+    return i;
+}
 
 void str_print(Str* s) {
     for (unsigned int i = 0; i < s->length; i++) {

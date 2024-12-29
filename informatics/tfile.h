@@ -6,11 +6,21 @@
 // https://github.com/TotemaM     //
 ////////////////////////////////////
 
-#include "tfile.h"
+#ifndef TFILE_H
+#define TFILE_H
 
+#include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 
+typedef struct TFile {
+    char* path;
+    FILE* ptr;
+    unsigned int length;
+    unsigned int lines;
+} TFile ;
+
+/* Text File constructor */
 short unsigned int tfile(TFile* f, char path[]) {
     if (access(path, F_OK) != 0) { return 1; }
     f->path = path;
@@ -25,10 +35,13 @@ short unsigned int tfile(TFile* f, char path[]) {
     return 0;
 }
 
+/* Getter for "lines" attribute. */
 unsigned int tfile_lines(const TFile* f) { return f->lines; }
 
+/* Getter for "length" attribute. */
 unsigned int tfile_length(const TFile* f) { return f->length; }
 
+/* Get the content of the file inside a char array */
 short unsigned int tfile_get(TFile* f, char content[]) {
     f->ptr = fopen(f->path, "r");
     if (f->ptr == NULL) { return 1; }
@@ -37,6 +50,7 @@ short unsigned int tfile_get(TFile* f, char content[]) {
     return 0;
 }
 
+/* Print the content of a file in the terminal */
 short unsigned int tfile_print(TFile* f) {
     f->ptr = fopen(f->path, "r");
     if (f->ptr == NULL) { return 1; }
@@ -49,6 +63,7 @@ short unsigned int tfile_print(TFile* f) {
     return 0;
 }
 
+/* Overwrite the content of the file. */
 short unsigned int tfile_overwrite(TFile* f, const char content[]) {
     f->ptr = fopen(f->path, "w");
     if (f->ptr == NULL) { return 1; }
@@ -57,6 +72,7 @@ short unsigned int tfile_overwrite(TFile* f, const char content[]) {
     return 0;
 }
 
+/* Writing content at the end of the file. */
 short unsigned int tfile_add(TFile* f, const char content[]) {
     f->ptr = fopen(f->path, "a");
     if (f->ptr == NULL) { return 1; }
@@ -70,6 +86,7 @@ short unsigned int tfile_add(TFile* f, const char content[]) {
     return 0;
 }
 
+/* Writing a new line with content at the end of the file. */
 short unsigned int tfile_append(TFile* f, const char content[]) {
     f->ptr = fopen(f->path, "a");
     if (f->ptr == NULL) { return 1; }
@@ -80,3 +97,5 @@ short unsigned int tfile_append(TFile* f, const char content[]) {
     if (tfile_add(f, content) == 1) { return 1; }
     return 0;
 }
+
+#endif // TFILE_H

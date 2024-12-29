@@ -47,6 +47,16 @@ short unsigned int str(Str* s, const char arr[]);
 short unsigned int str_cmp(const Str* s, const Str* t);
 
 /*
+ * Checks if the content of two null terminated char arrays are equal.
+ *
+ * a            : Pointer to a null terminated char array.
+ * b            : Pointer to a null terminated char array.
+ * 
+ * Returns 1 if equal, 0 otherwise.
+ */
+short unsigned int char_cmp(const char a[], const char b[]);
+
+/*
  * Checks if a string is equal to the content of a char array.
  *
  * s            : Pointer to a String structure.
@@ -76,6 +86,8 @@ short int str_cntn(const Str* s, const Str* t);
  */
 short int str_cntn_char(const Str* s, const char arr[]);
 
+// TODO short unsigned int char_cntn(const char a[], const char b[]);
+
 /*
  * Concatenating the content of the second string to the first string.
  *
@@ -104,6 +116,15 @@ short unsigned int str_cnct_char(Str* s, const char arr[]);
  * Returns the length of a string.
  */
 unsigned int str_length(Str* s);
+
+/*
+ * Calculate length of a null terminated char array.
+ *
+ * a            : Pointer to a null terminated char array.
+ * 
+ * Returns the length
+ */
+short unsigned int char_length(const char a[]);
 
 /*
  * Prints a string
